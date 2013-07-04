@@ -63,6 +63,9 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
  */
 I18n::lang('en-us');
 
+//Change the Cookie::$salt and uncomment the next line
+//Cookie::$salt = 'great resource of random strings https://www.grc.com/passwords.htm';
+
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
@@ -90,18 +93,34 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-	'base_url'   => '/kohana/',
+	'base_url'   => '/',
+	'index_file' => FALSE,
+	'cache_dir'  => DATAPATH . 'cache',
 ));
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-Kohana::$log->attach(new Log_File(APPPATH.'logs'));
+Kohana::$log->attach(new Log_File(DATAPATH.'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
  */
 Kohana::$config->attach(new Config_File);
+Kohana::$config->attach(new Config_File('config/default'));
+
+switch (Kohana::$environment)
+{
+	case Kohana::PRODUCTION:
+		Kohana::$config->attach(new Config_File('config/production'));
+		break;
+	case Kohana::STAGING:
+		Kohana::$config->attach(new Config_File('config/staging'));
+		break;
+	case Kohana::DEVELOPMENT:
+		Kohana::$config->attach(new Config_File('config/development'));
+		break;
+}
 
 /**
  * Enable modules. Modules are referenced by a relative or absolute path.
