@@ -1,3 +1,6 @@
+build/*
+!build/phpcs.xml
+cache.properties
 cgi-bin/*
 upload/
 .idea/*
