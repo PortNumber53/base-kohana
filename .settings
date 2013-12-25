@@ -1,0 +1,17 @@
+[kohana]
+application_path="../application"
+modules_path="../../../data/core-data/modules"
+system_path="../../../data/core-data/system"
+data_path="../../../data/sampledomain.dev"
+
+[website]
+domain_name=sampledomain.dev
+cookie_salt='a-very-good-sample-salt-for-your-hashes-goes-here'
+KOHANA_ENV development
+
+[database]
+default[host]=localhost
+default[database]=dbsampledatabase
+default[username]=sampleuser
+default[password]=samplepassword
+default[prefix]=prefix_

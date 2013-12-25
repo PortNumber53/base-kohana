@@ -2,7 +2,7 @@
 
 <project name="name-of-project" default="build">
 	<target name="build"
-	        depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdox,phpunit,phpcb"/>
+	        depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdox,phpunit,phpcb,deploy"/>
 
 	<target name="build-parallel"
 	        depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
@@ -135,4 +135,20 @@
 			<arg path="${basedir}/build/code-browser" />
 		</exec>
 	</target>
+
+	<target name="check-git">
+		<available file=".git/config" property="git.present" />
+		<available file="html/install" property="install.present" />
+	</target>
+
+	<target name="deploy" description="Prepare project for deployment" depends="check-git" if="git.present">
+		<exec executable="git" >
+			<arg value="update-index" />
+			<arg value="--assume-unchanged" />
+			<arg value="-q" />
+			<arg value="html/install.php" />
+		</exec>
+		<delete file="html/install.php" quiet="true" failonerror="false" />
+	</target>
+
 </project>
