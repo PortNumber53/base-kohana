@@ -1,4 +1,6 @@
 <?php
+$website_settings = parse_ini_file('../.settings', TRUE);
+define('WEBSITE', json_encode($website_settings));
 
 /**
  * The directory in which your application specific resources are located.
@@ -6,14 +8,15 @@
  *
  * @link http://kohanaframework.org/guide/about.install#application
  */
-$application = '../application';
+$application = $website_settings['kohana']['application_path'];
+
 
 /**
  * The directory in which your modules are located.
  *
  * @link http://kohanaframework.org/guide/about.install#modules
  */
-$modules = '../../../data/dev.kohana-stuff/modules';
+$modules = $website_settings['kohana']['modules_path'];
 
 /**
  * The directory in which the Kohana resources are located. The system
@@ -21,9 +24,28 @@ $modules = '../../../data/dev.kohana-stuff/modules';
  *
  * @link http://kohanaframework.org/guide/about.install#system
  */
-$system = '../../../data/dev.kohana-stuff/system';
+$system = $website_settings['kohana']['system_path'];
 
-$data = '../../../data/' . str_replace('www.', '', $_SERVER['SERVER_NAME']);
+/**
+ * The directory in which the Vendor resources are located. The vendor
+ * directory must contain a autoloader.
+ */
+$vendor = $website_settings['kohana']['vendor_path'];;
+
+if (! empty($website_settings['website']['domain_name']))
+{
+	define('DOMAINNAME', $website_settings['website']['domain_name']);
+}
+else
+{
+	die('Please set the DOMAINNAME');
+}
+$data = $website_settings['kohana']['data_path'];
+//Check if the folder exists
+if ( ! is_dir($data))
+{
+	mkdir($data, 0755, TRUE);
+}
 
 /**
  * The default extension of resource files. If you change this, all resources
@@ -70,6 +92,10 @@ if ( ! is_dir($modules) AND is_dir(DOCROOT.$modules))
 if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
     $system = DOCROOT.$system;
 
+// Make the vendor relative to the docroot, for symlink'd index.php
+if ( ! is_dir($vendor) AND is_dir(DOCROOT.$vendor))
+    $vendor = DOCROOT.$vendor;
+
 // Make the data relative to the docroot, for symlink'd index.php
 if ( ! is_dir($data) AND is_dir(DOCROOT.$data))
     $data = DOCROOT.$data;
@@ -78,10 +104,17 @@ if ( ! is_dir($data) AND is_dir(DOCROOT.$data))
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
+define('VENDORPATH', realpath($vendor).DIRECTORY_SEPARATOR);
 define('DATAPATH', realpath($data).DIRECTORY_SEPARATOR);
 
 // Clean up the configuration vars
-unset($application, $modules, $system, $data);
+unset($application, $modules, $system, $vendor, $data);
+
+if (file_exists('install'.EXT))
+{
+	// Load the installation check
+	return include 'install'.EXT;
+}
 
 /**
  * Define the start time of the application, used for profiling.

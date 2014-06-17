@@ -66,6 +66,9 @@ I18n::lang('en-us');
 //Change the Cookie::$salt and uncomment the next line
 //Cookie::$salt = 'great resource of random strings https://www.grc.com/passwords.htm';
 
+Cookie::$salt = $website_settings['website']['cookie_salt'];
+Cookie::$expiration = Date::WEEK;
+
 /**
  * Set Kohana::$environment if a 'KOHANA_ENV' environment variable has been supplied.
  *
@@ -75,6 +78,10 @@ I18n::lang('en-us');
 if (isset($_SERVER['KOHANA_ENV']))
 {
 	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['KOHANA_ENV']));
+}
+if (isset($_SERVER['HTTP_KOHANA_ENV']))
+{
+	Kohana::$environment = constant('Kohana::'.strtoupper($_SERVER['HTTP_KOHANA_ENV']));
 }
 
 /**
@@ -122,27 +129,6 @@ switch (Kohana::$environment)
 		break;
 }
 
-/**
- * Enable modules. Modules are referenced by a relative or absolute path.
- */
-Kohana::modules(array(
-	// 'auth'       => MODPATH.'auth',       // Basic authentication
-	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	// 'database'   => MODPATH.'database',   // Database access
-	// 'image'      => MODPATH.'image',      // Image manipulation
-	// 'minion'     => MODPATH.'minion',     // CLI Tasks
-	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	));
+require APPPATH.'modules'.EXT;
 
-/**
- * Set the routes. Each route must have a minimum of a name, a URI and a set of
- * defaults for the URI.
- */
-Route::set('default', '(<controller>(/<action>(/<id>)))')
-	->defaults(array(
-		'controller' => 'welcome',
-		'action'     => 'index',
-	));
+require APPPATH.'routes'.EXT;
