@@ -3,6 +3,7 @@ application_path="../application"
 modules_path="../../../data/core-data/modules"
 system_path="../../../data/core-data/system"
 data_path="../../../data/sampledomain.dev"
+install_check=1
 
 [website]
 domain_name=sampledomain.dev

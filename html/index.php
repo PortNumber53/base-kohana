@@ -110,7 +110,7 @@ define('DATAPATH', realpath($data).DIRECTORY_SEPARATOR);
 // Clean up the configuration vars
 unset($application, $modules, $system, $vendor, $data);
 
-if (file_exists('install'.EXT))
+if ($website_settings['kohana']['install_check'] && file_exists('install'.EXT))
 {
 	// Load the installation check
 	return include 'install'.EXT;
