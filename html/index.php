@@ -2,6 +2,17 @@
 $website_settings = parse_ini_file('../.settings', TRUE);
 define('WEBSITE', json_encode($website_settings));
 
+foreach ($website_settings as $group_key => $group)
+{
+	foreach ($group as $key=>$value)
+	{
+		if (is_string($value) && strpos($value, '__REPLACE_DOMAIN__'))
+		{
+			$website_settings[$group_key][$key] = str_replace('__REPLACE_DOMAIN__', $website_settings['website']['domain_name'], $value);
+		}
+	}
+}
+
 /**
  * The directory in which your application specific resources are located.
  * The application directory must contain the bootstrap.php file.
