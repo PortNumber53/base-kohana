@@ -2,8 +2,8 @@
 application_path="../application"
 modules_path="../../../data/core-data/modules"
 system_path="../../../data/core-data/system"
-data_path="../../../data/sampledomain.dev"
 vendor_path="../../../data/core-data/vendor"
+data_path="../../../data/sampledomain.dev"
 install_check=1
 
 [website]
