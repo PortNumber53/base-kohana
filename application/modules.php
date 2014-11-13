@@ -11,11 +11,11 @@
  */
 Kohana::modules(array(
 	// 'auth'       => MODPATH.'auth',       // Basic authentication
-	//'cache'      => MODPATH.'cache',      // Caching with multiple backends
+	'cache'      => MODPATH.'cache',      // Caching with multiple backends
 	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	//'common'  => MODPATH.'common',  // Benchmarking tool
+	'common'  => MODPATH.'common',  // Benchmarking tool
 	// 'database'   => MODPATH.'database',   // Database access
-	//'databasex'   => MODPATH.'databasex',   // Database access
+	'databasex'   => MODPATH.'databasex',   // Database access
 	// 'image'      => MODPATH.'image',      // Image manipulation
 	// 'minion'     => MODPATH.'minion',     // CLI Tasks
 	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
