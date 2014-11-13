@@ -1,0 +1,12 @@
+[submodule "system"]
+	path = system
+	url = git@github.com:PortNumber53/kohana-core.git
+[submodule "modules/cache"]
+	path = modules/cache
+	url = git@github.com:PortNumber53/cache.git
+[submodule "modules/common"]
+	path = modules/common
+	url = git@github.com:PortNumber53/kohana-common.git
+[submodule "modules/databasex"]
+	path = modules/databasex
+	url = git@github.com:PortNumber53/kohana-databasex.git
