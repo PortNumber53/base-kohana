@@ -35,5 +35,6 @@ upload/
 ehthumbs.db
 Icon?
 Thumbs.db
+*.iml
 .settings
 /.htaccess
