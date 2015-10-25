@@ -9,7 +9,6 @@ install_check=1
 [website]
 domain_name=sampledomain.dev
 cookie_salt='a-very-good-sample-salt-for-your-hashes-goes-here'
-KOHANA_ENV development
 
 [database]
 default[host]=localhost
